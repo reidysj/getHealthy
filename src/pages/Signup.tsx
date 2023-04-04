@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Input, Button, Stack, Select, Checkbox } from "@chakra-ui/react";
 import states from "../data/states";
-import { countries, Country } from "../data/countries";
-import axios from "axios";
+import { countries } from "../data/countries";
+import { useNavigate } from "react-router-dom";
+import { handleSubmit } from "../utils/eventHandlers";
 
 type SignupInfo = {
   username: string;
@@ -32,7 +33,9 @@ export default function Signup() {
     allowEmailContact: false,
     acceptsToS: false,
   });
+  const navigate = useNavigate();
 
+  //TODO: Make handleChange, handleCheck, handleSelect into agnostic utils
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSignupInfo({ ...signupInfo, [e.target.name]: e.target.value });
   };
@@ -48,7 +51,7 @@ export default function Signup() {
     });
   };
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const submit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const payload = {
       username: signupInfo.username,
@@ -61,17 +64,18 @@ export default function Signup() {
       email_contact_enabled: signupInfo.allowEmailContact,
       tos_accepted: signupInfo.acceptsToS,
     };
-    axios
-      .post("http://localhost:5000/api/users/register", payload)
-      .then((res) => {
-        console.log(res);
-      });
+    handleSubmit(e, "users/register", payload);
+    navigate("/dashboard");
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <Stack spacing="3" width="30%">
+      <form onSubmit={submit}>
+        <Stack
+          spacing="3"
+          width="30%"
+          style={{ margin: "auto", paddingTop: "50px" }}
+        >
           <Input
             placeholder="Username"
             name="username"
@@ -84,6 +88,7 @@ export default function Signup() {
             name="password"
             value={signupInfo.password}
             onChange={handleChange}
+            type="password"
           />
           <br />
           <Input
