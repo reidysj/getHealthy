@@ -17,6 +17,7 @@ export default function Login() {
   });
   const navigate = useNavigate();
 
+  //TODO: Make handleChange, handleCheck into agnostic utils
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
   };
@@ -28,7 +29,6 @@ export default function Login() {
     });
   };
 
-  // TODO: Make a single handleSubmit function that is agnostic
   const submit = (e: { preventDefault: () => void }) => {
     handleSubmit(e, "users/login", loginInfo);
     navigate("/dashboard");
