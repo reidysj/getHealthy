@@ -1,13 +1,7 @@
 import { useState } from "react";
 import { Input, Button, Stack, Checkbox } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { handleSubmit } from "../utils/eventHandlers";
-
-type LoginInfo = {
-  username: string;
-  password: string;
-  rememberMe: boolean;
-};
+import { handleCheck, handleSubmit } from "../utils/eventHandlers";
 
 export default function Login() {
   const [loginInfo, setLoginInfo] = useState({
@@ -17,16 +11,16 @@ export default function Login() {
   });
   const navigate = useNavigate();
 
-  //TODO: Make handleChange, handleCheck into agnostic utils
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const change = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
   };
 
-  const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginInfo({
-      ...loginInfo,
-      [e.target.name]: !loginInfo[e.target.name as keyof LoginInfo],
-    });
+  const check = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // setLoginInfo({
+    //   ...loginInfo,
+    //   [e.target.name]: !loginInfo[e.target.name as keyof LoginInfo],
+    // });
+    handleCheck(e, setLoginInfo, loginInfo);
   };
 
   const submit = (e: { preventDefault: () => void }) => {
@@ -42,17 +36,17 @@ export default function Login() {
             placeholder="Username"
             name="username"
             value={loginInfo.username}
-            onChange={handleChange}
+            onChange={change}
           />
           <Input
             placeholder="Password"
             name="password"
             value={loginInfo.password}
-            onChange={handleChange}
+            onChange={change}
           />
           <Checkbox
             isChecked={loginInfo.rememberMe}
-            onChange={handleCheck}
+            onChange={check}
             name="rememberMe"
           >
             Remember Me for 30 Days

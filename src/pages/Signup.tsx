@@ -3,21 +3,12 @@ import { Input, Button, Stack, Select, Checkbox } from "@chakra-ui/react";
 import states from "../data/states";
 import { countries } from "../data/countries";
 import { useNavigate } from "react-router-dom";
-import { handleSubmit } from "../utils/eventHandlers";
-
-type SignupInfo = {
-  username: string;
-  password: string;
-  passwordConfirmation: string;
-  email: string;
-  country: string;
-  city: string;
-  state: string;
-  mobileNumber: string;
-  allowMobileContact: boolean;
-  allowEmailContact: boolean;
-  acceptsToS: boolean;
-};
+import {
+  handleChange,
+  handleCheck,
+  handleSelect,
+  handleSubmit,
+} from "../utils/eventHandlers";
 
 export default function Signup() {
   const [signupInfo, setSignupInfo] = useState({
@@ -28,43 +19,29 @@ export default function Signup() {
     country: "",
     city: "",
     state: "",
-    mobileNumber: "",
-    allowMobileContact: false,
-    allowEmailContact: false,
-    acceptsToS: false,
+    mobile_number: "",
+    mobile_contact_allowed: false,
+    email_contact_enabled: false,
+    tos_accepted: false,
   });
   const navigate = useNavigate();
 
   //TODO: Make handleChange, handleCheck, handleSelect into agnostic utils
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSignupInfo({ ...signupInfo, [e.target.name]: e.target.value });
+  const change = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleChange(e, setSignupInfo, signupInfo);
   };
 
-  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSignupInfo({ ...signupInfo, [e.target.name]: e.target.value });
+  const select = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    handleSelect(e, setSignupInfo, signupInfo);
   };
 
-  const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSignupInfo({
-      ...signupInfo,
-      [e.target.name]: !signupInfo[e.target.name as keyof SignupInfo],
-    });
+  const check = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleCheck(e, setSignupInfo, signupInfo);
   };
 
   const submit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const payload = {
-      username: signupInfo.username,
-      password: signupInfo.password,
-      email: signupInfo.email,
-      city: signupInfo.city,
-      state: signupInfo.state,
-      mobile_number: signupInfo.mobileNumber,
-      mobile_contact_allowed: signupInfo.allowMobileContact,
-      email_contact_enabled: signupInfo.allowEmailContact,
-      tos_accepted: signupInfo.acceptsToS,
-    };
-    handleSubmit(e, "users/register", payload);
+    handleSubmit(e, "users/register", signupInfo);
     navigate("/dashboard");
   };
 
@@ -80,34 +57,34 @@ export default function Signup() {
             placeholder="Username"
             name="username"
             value={signupInfo.username}
-            onChange={handleChange}
+            onChange={change}
           />
           <br />
           <Input
             placeholder="Password"
             name="password"
             value={signupInfo.password}
-            onChange={handleChange}
+            onChange={change}
             type="password"
           />
           <br />
           <Input
             placeholder="Confirm Password"
             name="passwordConfirmation"
-            onChange={handleChange}
+            onChange={change}
             value={signupInfo.passwordConfirmation}
           />
           <br />
           <Input
             placeholder="Email Address"
-            onChange={handleChange}
+            onChange={change}
             value={signupInfo.email}
             name="email"
           />
           <br />
           <Select
             placeholder="Country"
-            onChange={handleSelect}
+            onChange={select}
             value={signupInfo.country}
             name="country"
           >
@@ -122,7 +99,7 @@ export default function Signup() {
           <br />
           <Select
             placeholder="State"
-            onChange={handleSelect}
+            onChange={select}
             value={signupInfo.state}
             name="state"
             disabled={signupInfo.country !== "US"}
@@ -139,37 +116,37 @@ export default function Signup() {
             type="text"
             placeholder="City"
             value={signupInfo.city}
-            onChange={handleChange}
+            onChange={change}
             name="city"
           ></Input>
           <br />
           <Input
             type="phone"
             placeholder="Mobile Phone Number"
-            value={signupInfo.mobileNumber}
-            onChange={handleChange}
-            name="mobileNumber"
+            value={signupInfo.mobile_number}
+            onChange={change}
+            name="mobile_number"
           ></Input>
           <br />
           <Checkbox
-            isChecked={signupInfo.allowEmailContact}
-            onChange={handleCheck}
-            name="allowEmailContact"
+            isChecked={signupInfo.email_contact_enabled}
+            onChange={check}
+            name="email_contact_enabled"
           >
             Allow email contact?
           </Checkbox>
           <br />
           <Checkbox
-            isChecked={signupInfo.allowMobileContact}
-            onChange={handleCheck}
-            name="allowMobileContact"
+            isChecked={signupInfo.mobile_contact_allowed}
+            onChange={check}
+            name="mobile_contact_allowed"
           >
             Allow mobile (text) contact?
           </Checkbox>
           <br />
           <Checkbox
-            isChecked={signupInfo.acceptsToS}
-            onChange={handleCheck}
+            isChecked={signupInfo.tos_accepted}
+            onChange={check}
             name="acceptsToS"
           >
             Accept ToS?
