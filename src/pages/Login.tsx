@@ -16,16 +16,13 @@ export default function Login() {
   };
 
   const check = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // setLoginInfo({
-    //   ...loginInfo,
-    //   [e.target.name]: !loginInfo[e.target.name as keyof LoginInfo],
-    // });
     handleCheck(e, setLoginInfo, loginInfo);
   };
 
-  const submit = (e: { preventDefault: () => void }) => {
-    handleSubmit(e, "users/login", loginInfo);
-    navigate("/dashboard");
+  const submit = async (e: { preventDefault: () => void }) => {
+    handleSubmit(e, "users/login", loginInfo).then((data: any) => {
+      navigate("/dashboard");
+    });
   };
 
   return (
