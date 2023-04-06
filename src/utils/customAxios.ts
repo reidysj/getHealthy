@@ -2,7 +2,8 @@ import axios from "axios";
 
 const baseUrl = process.env["API_URL"] || "http://localhost:5000/api";
 
-function axiosGet(route: string, param?: string) {
+function axiosGet(route: string, param = "") {
+  console.log(`${baseUrl}/${route}/${param && param}`);
   return axios.get(`${baseUrl}/${route}/${param && param}`).then((res) => {
     return res.data;
   });

@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Input, Button, Stack, Checkbox } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { handleCheck, handleSubmit } from "../utils/eventHandlers";
+import {
+  handleCheck,
+  handleSubmit,
+  handleChange,
+} from "../utils/eventHandlers";
 
 export default function Login() {
   const [loginInfo, setLoginInfo] = useState({
@@ -12,7 +16,7 @@ export default function Login() {
   const navigate = useNavigate();
 
   const change = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
+    handleChange(e, setLoginInfo, loginInfo);
   };
 
   const check = (e: React.ChangeEvent<HTMLInputElement>) => {
