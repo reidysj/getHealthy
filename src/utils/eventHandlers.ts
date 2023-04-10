@@ -8,6 +8,8 @@ const handleSubmit = (
 ): any => {
   e.preventDefault();
   return axiosPost(route, payload).then((data) => {
+    //TODO: Figure out why this isn't setting the token and I needed to add it to the component itself
+    //TODO: Set tokens as headers in all requests, not as payload
     if (data.token) localStorage.setItem("token", data.token);
     return data;
   });

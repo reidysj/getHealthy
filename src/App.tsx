@@ -14,7 +14,10 @@ function App() {
   return (
     <ChakraProvider>
       <Routes>
-        <Route path="/" element={<Homepage />} />
+        <Route
+          path="/"
+          element={localStorage.getItem("token") ? <Dashboard /> : <Homepage />}
+        />
         <Route path="/register" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route
