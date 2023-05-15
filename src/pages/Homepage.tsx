@@ -8,6 +8,7 @@ import {
   CardFooter,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { BiBody } from "react-icons/bi";
 
 export default function Homepage() {
   const navigate = useNavigate();
@@ -22,44 +23,56 @@ export default function Homepage() {
   };
 
   return (
-    <Card style={{ backgroundColor: "EEEEEE" }}>
-      <Stack>
-        <CardBody>
-          <Heading style={{ textAlign: "center" }} size="lg">
-            Get Healthy!
-          </Heading>
-          <div
-            style={{
-              display: "flex",
-              border: "2px solid orange",
-            }}
-          >
-            <Text py="2" style={{ textAlign: "center" }}>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure
-              corrupti, fuga obcaecati, et deleniti consequatur molestias quia,
-              adipisci veniam quae totam exercitationem. Ad architecto harum vel
-              explicabo consectetur ea unde.
-            </Text>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                height: "100%",
-                border: "2px solid red",
-              }}
-            >
-              <Button onClick={() => handleClick("/login")}>Sign In</Button>
-              <Button onClick={() => handleClick("/register")}>Register</Button>
-            </div>
-          </div>
-        </CardBody>
-        <CardFooter
+    <>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <div>
+          <BiBody size="70" />
+        </div>
+        <a href="/">Home</a>
+        <a href="/">Company</a>
+        <a href="/">Product</a>
+        <a href="/">Contact</a>
+        <div
           style={{
-            margin: "auto",
+            display: "flex",
+            width: "20%",
+            justifyContent: "space-between",
           }}
-        ></CardFooter>
-      </Stack>
-    </Card>
+        >
+          <Button onClick={() => handleClick("/login")}>Sign In</Button>
+          <Button onClick={() => handleClick("/register")}>Register</Button>
+        </div>
+      </div>
+      <Card style={{ backgroundColor: "EEEEEE" }}>
+        <Heading style={{ textAlign: "center" }} size="lg">
+          Get Healthy!
+        </Heading>
+        <Stack>
+          <CardBody>
+            <div>
+              <Text py="2" style={{ textAlign: "center" }}>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure
+                corrupti, fuga obcaecati, et deleniti consequatur molestias
+                quia, adipisci veniam quae totam exercitationem. Ad architecto
+                harum vel explicabo consectetur ea unde.
+              </Text>
+              <div></div>
+            </div>
+          </CardBody>
+          <CardFooter
+            style={{
+              margin: "auto",
+            }}
+          ></CardFooter>
+        </Stack>
+      </Card>
+    </>
   );
 }

@@ -26,7 +26,7 @@ export default function Login() {
   const submit = async (e: { preventDefault: () => void }) => {
     handleSubmit(e, "users/login", loginInfo).then((data: any) => {
       localStorage.setItem("token", data.jwt);
-      navigate("/");
+      navigate("/dashboard");
     });
   };
 
